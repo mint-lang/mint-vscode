@@ -1,0 +1,51 @@
+{
+  "name": "mint",
+  "displayName": "Mint",
+  "description": "VS Code Support for Mint a refreshing programming language for the front-end web development",
+  "version": "0.0.1",
+  "publisher": "danielsokil",
+  "repository": {
+    "url": "https://github.com/s0kil/mint-vscode"
+  },
+  "engines": {
+    "vscode": "^1.43.0"
+  },
+  "devDependencies": {
+    "js-yaml": "^3.13.1"
+  },
+  "scripts": {
+    "convert": "js-yaml syntaxes/mint.tmLanguage.yaml > syntaxes/mint.tmLanguage.json"
+  },
+  "icon": "images/logo.png",
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "mint",
+        "aliases": [
+          "Mint",
+          "mint"
+        ],
+        "extensions": [
+          ".mint"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "mint",
+        "scopeName": "source.mint",
+        "path": "./syntaxes/mint.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "mint",
+        "path": "./snippets/mint.json"
+      }
+    ]
+  }
+}
