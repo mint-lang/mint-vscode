@@ -14,7 +14,7 @@ repository:
       [
         {
           name: keyword.control.mint,
-          match: \b(global|state|encode|decode|for|module|provider|suite|test|parallel|sequence|case|try|catch|next|with|component|property|fun|routes|get|connect|exposing|record|store|use|when|if|else|where)\b,
+          match: \b(global|state|encode|decode|for|module|provider|suite|test|parallel|sequence|case|try|catch|next|with|component|property|fun|style|routes|get|connect|exposing|record|store|use|when|if|else|where)\b,
         },
         {
           name: entity.name.class.mint,
@@ -31,8 +31,8 @@ repository:
     patterns: [{ name: constant.character.escape.mint, match: "\\\\." }]
 
   html:
-    begin: (?i)(?=:(\\s*)Html(\\s*){),
-    end: (?<=>})|^\\s*}$,
+    begin: "(?i)(?=:(\\s*)Html(\\s*){)"
+    end: "(?<=>})|^\\s*}$"
     contentName: embedded.html
     patterns:
       [
