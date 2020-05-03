@@ -57,8 +57,16 @@
     ],
     "commands": [
       {
-        "command": "extension.format-mint",
-        "title": "Format Mint Files"
+        "command": "mint.build",
+        "title": "Mint: Build Production Bundle"
+      },
+      {
+        "command": "mint.install",
+        "title": "Mint: Install Dependencies"
+      },
+      {
+        "command": "mint.formatAll",
+        "title": "Mint: Format All Files"
       }
     ]
   }

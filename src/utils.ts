@@ -13,3 +13,9 @@ export function getDirtyFile(document: vscode.TextDocument): string {
   fs.writeFileSync(dirtyFilePath, document.getText());
   return dirtyFilePath;
 }
+
+export function createAndShowOutputWindow(): vscode.OutputChannel {
+  var channel = vscode.window.createOutputChannel("mint");
+  channel.show();
+  return channel;
+}
