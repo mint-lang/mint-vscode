@@ -2,13 +2,13 @@
   "name": "mint",
   "displayName": "Mint",
   "description": "VS Code Support for Mint a refreshing programming language for the front-end web development",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "publisher": "danielsokil",
   "repository": {
     "url": "https://github.com/s0kil/mint-vscode"
   },
   "engines": {
-    "vscode": "^1.43.0"
+    "vscode": "^1.44.0"
   },
   "activationEvents": [
     "onLanguage:mint",
