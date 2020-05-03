@@ -10,11 +10,19 @@
   "engines": {
     "vscode": "^1.43.0"
   },
+  "activationEvents": [
+    "onLanguage:mint"
+  ],
+  "main": "./out/src/extension",
   "devDependencies": {
-    "js-yaml": "^3.13.1"
+    "@types/node": "^13.13.4",
+    "js-yaml": "^3.13.1",
+    "typescript": "^3.8.3",
+    "vscode": "^1.1.37"
   },
   "scripts": {
-    "convert": "js-yaml syntaxes/mint.tmLanguage.yaml > syntaxes/mint.tmLanguage.json"
+    "convert": "js-yaml syntaxes/mint.tmLanguage.yaml > syntaxes/mint.tmLanguage.json",
+    "postinstall": "node ./node_modules/vscode/bin/install && tsc"
   },
   "icon": "images/logo.png",
   "categories": [
@@ -45,6 +53,12 @@
       {
         "language": "mint",
         "path": "./snippets/mint.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "extension.format-mint",
+        "title": "Format Mint Files"
       }
     ]
   }
