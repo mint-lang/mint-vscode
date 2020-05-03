@@ -39,3 +39,14 @@ export function runMintCommandAsTask(
     )
   );
 }
+
+/**
+ * Wait for a number of seconds
+ *
+ * @param seconds The number of seconds to wait before completing
+ */
+export function promiseSeconds(seconds: number): Thenable<void> {
+  return new Promise((res) => {
+    setTimeout(res, 1000 * seconds);
+  });
+}

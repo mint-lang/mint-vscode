@@ -1,4 +1,5 @@
-import { runMintCommandAsTask } from "./utils";
+import { runMintCommandAsTask, promiseSeconds } from "./utils";
+import * as vscode from "vscode";
 
 export function mintBuildCommand() {
   runMintCommandAsTask("build", "Build production bundle");
@@ -19,10 +20,30 @@ export function mintFormatAllCommand() {
   runMintCommandAsTask("format", "Format all files");
 }
 
-// export function mintInitCommand() {
-// // TODO: dialog to ask for folder and project name
-//   runMintCommandAsTask("init", "Init a new project");
-// }
+export async function mintInitCommand() {
+  const projectName = await vscode.window.showInputBox({
+    prompt: "Type the name of your project",
+    placeHolder: "mint-project",
+  });
+
+  const folder = await vscode.window.showOpenDialog({
+    canSelectFiles: false,
+    canSelectFolders: true,
+    canSelectMany: false,
+    openLabel: "Create project",
+  });
+
+  const newProjectRoot = `${folder[0].path}/${projectName}`;
+
+  await runMintCommandAsTask(`init ${newProjectRoot}`, "Init a new project");
+
+  await promiseSeconds(2);
+
+  await vscode.commands.executeCommand(
+    "vscode.openFolder",
+    vscode.Uri.file(newProjectRoot)
+  );
+}
 
 export function mintInstallCommand() {
   runMintCommandAsTask("install", "Install dependencies");

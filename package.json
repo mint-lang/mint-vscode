@@ -16,6 +16,7 @@
     "onCommand:mint.compile",
     "onCommand:mint.docs",
     "onCommand:mint.formatAll",
+    "onCommand:mint.init",
     "onCommand:mint.install",
     "onCommand:mint.loc",
     "onCommand:mint.start",
@@ -80,6 +81,10 @@
       {
         "command": "mint.formatAll",
         "title": "Mint: Format all files"
+      },
+      {
+        "command": "mint.init",
+        "title": "Mint: Initialize new project"
       },
       {
         "command": "mint.install",

@@ -13,6 +13,7 @@ vscode.commands.registerCommand("mint.build", cmd.mintBuildCommand);
 vscode.commands.registerCommand("mint.compile", cmd.mintCompileCommand);
 vscode.commands.registerCommand("mint.docs", cmd.mintDocsCommand);
 vscode.commands.registerCommand("mint.formatAll", cmd.mintFormatAllCommand);
+vscode.commands.registerCommand("mint.init", cmd.mintInitCommand);
 vscode.commands.registerCommand("mint.install", cmd.mintInstallCommand);
 vscode.commands.registerCommand("mint.loc", cmd.mintCountLinesCommand);
 vscode.commands.registerCommand("mint.start", cmd.mintStartCommand);
