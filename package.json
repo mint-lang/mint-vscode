@@ -16,13 +16,13 @@
   "main": "./out/src/extension",
   "devDependencies": {
     "@types/node": "^13.13.4",
+    "@types/vscode": "^1.44.0",
     "js-yaml": "^3.13.1",
-    "typescript": "^3.8.3",
-    "vscode": "^1.1.37"
+    "typescript": "^3.8.3"
   },
   "scripts": {
     "convert": "js-yaml syntaxes/mint.tmLanguage.yaml > syntaxes/mint.tmLanguage.json",
-    "postinstall": "node ./node_modules/vscode/bin/install && tsc"
+    "postinstall": "tsc -b"
   },
   "icon": "images/logo.png",
   "categories": [
