@@ -1,27 +1,45 @@
-import cp = require("child_process");
-import vscode = require("vscode");
-import { createAndShowOutputWindow } from "./utils";
+import { runMintCommandAsTask } from "./utils";
 
 export function mintBuildCommand() {
-  cp.spawnSync("mint", ["build"], {
-    cwd: vscode.workspace.rootPath,
-  });
-
-  createAndShowOutputWindow().appendLine("Built ./dist for production.");
+  runMintCommandAsTask("build", "Build production bundle");
 }
 
-export function mintInstallCommand() {
-  cp.spawnSync("mint", ["install"], {
-    cwd: vscode.workspace.rootPath,
-  });
+export function mintCompileCommand() {
+  runMintCommandAsTask(
+    "compile",
+    "Compile project into single JavaScript file"
+  );
+}
 
-  createAndShowOutputWindow().appendLine("Installed all dependencies.");
+export function mintDocsCommand() {
+  runMintCommandAsTask("docs", "Start documentation server");
 }
 
 export function mintFormatAllCommand() {
-  cp.spawnSync("mint", ["format"], {
-    cwd: vscode.workspace.rootPath,
-  });
+  runMintCommandAsTask("format", "Format all files");
+}
 
-  createAndShowOutputWindow().appendLine("Formatted all files.");
+// export function mintInitCommand() {
+// // TODO: dialog to ask for folder and project name
+//   runMintCommandAsTask("init", "Init a new project");
+// }
+
+export function mintInstallCommand() {
+  runMintCommandAsTask("install", "Install dependencies");
+}
+
+export function mintCountLinesCommand() {
+  runMintCommandAsTask("loc", "Count lines of code");
+}
+
+export function mintStartCommand() {
+  runMintCommandAsTask("start", "Start development server");
+}
+
+export function mintTestCommand() {
+  runMintCommandAsTask("test", "Run tests");
+}
+
+export function mintVersionCommand() {
+  runMintCommandAsTask("version", "Show current version");
 }

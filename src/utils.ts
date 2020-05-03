@@ -19,3 +19,23 @@ export function createAndShowOutputWindow(): vscode.OutputChannel {
   channel.show();
   return channel;
 }
+/**
+ * Run a mint subcommand as a VSCode task, ie `mint format`
+ *
+ * @param subcommand The mint subcommand to run, ie `format`
+ * @param description The VSCode description to show, ie "Format all files"
+ */
+export function runMintCommandAsTask(
+  subcommand: string,
+  description: string
+): Thenable<vscode.TaskExecution> {
+  return vscode.tasks.executeTask(
+    new vscode.Task(
+      { command: "", type: "" },
+      vscode.TaskScope.Workspace,
+      description,
+      "mint",
+      new vscode.ShellExecution(`mint ${subcommand}`)
+    )
+  );
+}

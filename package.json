@@ -11,7 +11,16 @@
     "vscode": "^1.43.0"
   },
   "activationEvents": [
-    "onLanguage:mint"
+    "onLanguage:mint",
+    "onCommand:mint.build",
+    "onCommand:mint.compile",
+    "onCommand:mint.docs",
+    "onCommand:mint.formatAll",
+    "onCommand:mint.install",
+    "onCommand:mint.loc",
+    "onCommand:mint.start",
+    "onCommand:mint.test",
+    "onCommand:mint.version"
   ],
   "main": "./out/src/extension",
   "devDependencies": {
@@ -61,12 +70,36 @@
         "title": "Mint: Build Production Bundle"
       },
       {
-        "command": "mint.install",
-        "title": "Mint: Install Dependencies"
+        "command": "mint.compile",
+        "title": "Mint: Compile project into single JavaScript file"
+      },
+      {
+        "command": "mint.docs",
+        "title": "Mint: Start documentation server"
       },
       {
         "command": "mint.formatAll",
-        "title": "Mint: Format All Files"
+        "title": "Mint: Format all files"
+      },
+      {
+        "command": "mint.install",
+        "title": "Mint: Install dependencies"
+      },
+      {
+        "command": "mint.loc",
+        "title": "Mint: Count lines of code"
+      },
+      {
+        "command": "mint.start",
+        "title": "Mint: Start development server"
+      },
+      {
+        "command": "mint.test",
+        "title": "Mint: Run tests"
+      },
+      {
+        "command": "mint.version",
+        "title": "Mint: Show current version"
       }
     ]
   }
