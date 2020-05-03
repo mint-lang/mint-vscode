@@ -8,7 +8,7 @@
     "url": "https://github.com/s0kil/mint-vscode"
   },
   "engines": {
-    "vscode": "^1.43.0"
+    "vscode": "^1.44.0"
   },
   "activationEvents": [
     "onLanguage:mint"
