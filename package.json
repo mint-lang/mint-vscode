@@ -11,18 +11,28 @@
     "vscode": "^1.44.0"
   },
   "activationEvents": [
-    "onLanguage:mint"
+    "onLanguage:mint",
+    "onCommand:mint.build",
+    "onCommand:mint.compile",
+    "onCommand:mint.docs",
+    "onCommand:mint.formatAll",
+    "onCommand:mint.init",
+    "onCommand:mint.install",
+    "onCommand:mint.loc",
+    "onCommand:mint.start",
+    "onCommand:mint.test",
+    "onCommand:mint.version"
   ],
   "main": "./out/src/extension",
   "devDependencies": {
     "@types/node": "^13.13.4",
-    "@types/vscode": "^1.44.0",
     "js-yaml": "^3.13.1",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "@types/vscode": "^1.44.0"
   },
   "scripts": {
     "convert": "js-yaml syntaxes/mint.tmLanguage.yaml > syntaxes/mint.tmLanguage.json",
-    "postinstall": "tsc -b"
+    "postinstall": "tsc"
   },
   "icon": "images/logo.png",
   "categories": [
@@ -57,8 +67,44 @@
     ],
     "commands": [
       {
-        "command": "extension.format-mint",
-        "title": "Format Mint Files"
+        "command": "mint.build",
+        "title": "Mint: Build Production Bundle"
+      },
+      {
+        "command": "mint.compile",
+        "title": "Mint: Compile project into single JavaScript file"
+      },
+      {
+        "command": "mint.docs",
+        "title": "Mint: Start documentation server"
+      },
+      {
+        "command": "mint.formatAll",
+        "title": "Mint: Format all files"
+      },
+      {
+        "command": "mint.init",
+        "title": "Mint: Initialize new project"
+      },
+      {
+        "command": "mint.install",
+        "title": "Mint: Install dependencies"
+      },
+      {
+        "command": "mint.loc",
+        "title": "Mint: Count lines of code"
+      },
+      {
+        "command": "mint.start",
+        "title": "Mint: Start development server"
+      },
+      {
+        "command": "mint.test",
+        "title": "Mint: Run tests"
+      },
+      {
+        "command": "mint.version",
+        "title": "Mint: Show current version"
       }
     ]
   }
