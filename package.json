@@ -26,15 +26,15 @@
   "main": "./out/src/extension",
   "devDependencies": {
     "@types/node": "^13.13.4",
+    "@types/vscode": "^1.44.0",
     "js-yaml": "^3.13.1",
-    "typescript": "^3.8.3",
-    "@types/vscode": "^1.44.0"
+    "typescript": "^3.8.3"
   },
   "scripts": {
-    "convert": "js-yaml syntaxes/mint.tmLanguage.yaml > syntaxes/mint.tmLanguage.json",
-    "watch": "tsc -watch -p ./",
     "compile": "echo Compiling... && npm run convert && tsc -p ./",
+    "convert": "js-yaml syntaxes/mint.tmLanguage.yaml > syntaxes/mint.tmLanguage.json",
     "postinstall": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
     "vscode:prepublish": "npm run compile"
   },
   "icon": "images/logo.png",
@@ -71,7 +71,7 @@
     "commands": [
       {
         "command": "mint.build",
-        "title": "Mint: Build Production Bundle"
+        "title": "Mint: Build production bundle"
       },
       {
         "command": "mint.compile",
