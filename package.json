@@ -33,7 +33,7 @@
   "scripts": {
     "convert": "js-yaml syntaxes/mint.tmLanguage.yaml > syntaxes/mint.tmLanguage.json",
     "watch": "tsc -watch -p ./",
-    "compile": "echo Compiling... && tsc -p ./",
+    "compile": "echo Compiling... && npm run convert && tsc -p ./",
     "postinstall": "tsc -p ./",
     "vscode:prepublish": "npm run compile"
   },
