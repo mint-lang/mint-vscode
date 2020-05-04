@@ -32,7 +32,10 @@
   },
   "scripts": {
     "convert": "js-yaml syntaxes/mint.tmLanguage.yaml > syntaxes/mint.tmLanguage.json",
-    "postinstall": "tsc"
+    "watch": "tsc -watch -p ./",
+    "compile": "echo Compiling... && tsc -p ./",
+    "postinstall": "tsc -p ./",
+    "vscode:prepublish": "npm run compile"
   },
   "icon": "images/logo.png",
   "categories": [
