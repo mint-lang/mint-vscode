@@ -1,5 +1,10 @@
 # Mint VS Code Changelog
 
+## 0.3.1
+
+- Highlight `enum` keyword ([#15](https://github.com/s0kil/mint-vscode/pull/15))
+- Hide Command Palette commands when not in a Mint project ([#14](https://github.com/s0kil/mint-vscode/pull/14))
+
 ## 0.3.0
 
 - Add Mint CLI commands to command palette ([#10](https://github.com/s0kil/mint-vscode/pull/10))
