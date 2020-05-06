@@ -2,7 +2,7 @@
   "name": "mint",
   "displayName": "Mint",
   "description": "VS Code Support for Mint a refreshing programming language for the front-end web development",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "publisher": "danielsokil",
   "repository": {
     "url": "https://github.com/s0kil/mint-vscode"
@@ -17,7 +17,7 @@
   ],
   "main": "./out/src/extension",
   "devDependencies": {
-    "@types/node": "^13.13.4",
+    "@types/node": "^13.13.5",
     "@types/vscode": "^1.44.0",
     "js-yaml": "^3.13.1",
     "typescript": "^3.8.3"

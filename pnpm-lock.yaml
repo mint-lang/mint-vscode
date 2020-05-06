@@ -1,14 +1,14 @@
 devDependencies:
-  '@types/node': 13.13.4
+  '@types/node': 13.13.5
   '@types/vscode': 1.44.0
   js-yaml: 3.13.1
   typescript: 3.8.3
 lockfileVersion: 5.1
 packages:
-  /@types/node/13.13.4:
+  /@types/node/13.13.5:
     dev: true
     resolution:
-      integrity: sha512-x26ur3dSXgv5AwKS0lNfbjpCakGIduWU1DU91Zz58ONRWrIKGunmZBNv4P7N+e27sJkiGDsw/3fT4AtsqQBrBA==
+      integrity: sha512-3ySmiBYJPqgjiHA7oEaIo2Rzz0HrOZ7yrNO5HWyaE5q0lQ3BppDZ3N53Miz8bw2I7gh1/zir2MGVZBvpb1zq9g==
   /@types/vscode/1.44.0:
     dev: true
     resolution:
@@ -46,7 +46,7 @@ packages:
     resolution:
       integrity: sha512-MYlEfn5VrLNsgudQTVJeNaQFUAI7DkhnOjdpAp4T+ku1TfQClewlbSuTVHiA+8skNBgaf02TL/kLOvig4y3G8w==
 specifiers:
-  '@types/node': ^13.13.4
+  '@types/node': ^13.13.5
   '@types/vscode': ^1.44.0
   js-yaml: ^3.13.1
   typescript: ^3.8.3

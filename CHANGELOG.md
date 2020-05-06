@@ -1,5 +1,9 @@
 # Mint VS Code Changelog
 
+## 0.3.2
+
+- Highlight `using` keyword ([#16](https://github.com/s0kil/mint-vscode/pull/16))
+
 ## 0.3.1
 
 - Highlight `enum` keyword ([#15](https://github.com/s0kil/mint-vscode/pull/15))
