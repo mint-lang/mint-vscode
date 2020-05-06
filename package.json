@@ -2,7 +2,7 @@
   "name": "mint",
   "displayName": "Mint",
   "description": "VS Code Support for Mint a refreshing programming language for the front-end web development",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "publisher": "danielsokil",
   "repository": {
     "url": "https://github.com/s0kil/mint-vscode"
@@ -12,16 +12,8 @@
   },
   "activationEvents": [
     "onLanguage:mint",
-    "onCommand:mint.build",
-    "onCommand:mint.compile",
-    "onCommand:mint.docs",
-    "onCommand:mint.formatAll",
-    "onCommand:mint.init",
-    "onCommand:mint.install",
-    "onCommand:mint.loc",
-    "onCommand:mint.start",
-    "onCommand:mint.test",
-    "onCommand:mint.version"
+    "workspaceContains:**/*.mint",
+    "onCommand:mint.init"
   ],
   "main": "./out/src/extension",
   "devDependencies": {
@@ -71,44 +63,97 @@
     "commands": [
       {
         "command": "mint.build",
-        "title": "Mint: Build production bundle"
+        "title": "Build production bundle",
+        "category": "Mint"
       },
       {
         "command": "mint.compile",
-        "title": "Mint: Compile project into single JavaScript file"
+        "title": "Compile project into single JavaScript file",
+        "category": "Mint"
       },
       {
         "command": "mint.docs",
-        "title": "Mint: Start documentation server"
+        "title": "Start documentation server",
+        "category": "Mint"
       },
       {
         "command": "mint.formatAll",
-        "title": "Mint: Format all files"
+        "title": "Format all files",
+        "category": "Mint"
       },
       {
         "command": "mint.init",
-        "title": "Mint: Initialize new project"
+        "title": "Initialize new project",
+        "category": "Mint"
       },
       {
         "command": "mint.install",
-        "title": "Mint: Install dependencies"
+        "title": "Install dependencies",
+        "category": "Mint"
       },
       {
         "command": "mint.loc",
-        "title": "Mint: Count lines of code"
+        "title": "Count lines of code",
+        "category": "Mint"
       },
       {
         "command": "mint.start",
-        "title": "Mint: Start development server"
+        "title": "Start development server",
+        "category": "Mint"
       },
       {
         "command": "mint.test",
-        "title": "Mint: Run tests"
+        "title": "Run tests",
+        "category": "Mint"
       },
       {
         "command": "mint.version",
-        "title": "Mint: Show current version"
+        "title": "Show current version",
+        "category": "Mint"
       }
-    ]
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "mint.build",
+          "when": "mint:isActivated"
+        },
+        {
+          "command": "mint.compile",
+          "when": "mint:isActivated"
+        },
+        {
+          "command": "mint.docs",
+          "when": "mint:isActivated"
+        },
+        {
+          "command": "mint.formatAll",
+          "when": "mint:isActivated"
+        },
+        {
+          "command": "mint.init"
+        },
+        {
+          "command": "mint.install",
+          "when": "mint:isActivated"
+        },
+        {
+          "command": "mint.loc",
+          "when": "mint:isActivated"
+        },
+        {
+          "command": "mint.start",
+          "when": "mint:isActivated"
+        },
+        {
+          "command": "mint.test",
+          "when": "mint:isActivated"
+        },
+        {
+          "command": "mint.version",
+          "when": "mint:isActivated"
+        }
+      ]
+    }
   }
 }
