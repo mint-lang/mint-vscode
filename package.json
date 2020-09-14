@@ -4,7 +4,7 @@
   "displayName": "Mint",
   "description": "VS Code Support for Mint a refreshing programming language for the front-end web development",
   "version": "0.3.2",
-  "publisher": "danielsokil",
+  "publisher": "mint-lang",
   "repository": {
     "url": "https://github.com/s0kil/mint-vscode"
   },
