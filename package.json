@@ -18,10 +18,10 @@
   ],
   "main": "./out/src/extension",
   "devDependencies": {
-    "@types/node": "^13.13.5",
-    "@types/vscode": "^1.44.0",
-    "js-yaml": "^3.13.1",
-    "typescript": "^3.8.3"
+    "@types/node": "^14.11.2",
+    "@types/vscode": "^1.49.0",
+    "js-yaml": "^3.14.0",
+    "typescript": "^4.0.3"
   },
   "scripts": {
     "compile": "echo Compiling... && npm run convert && tsc -p ./",
