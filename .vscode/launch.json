@@ -12,5 +12,6 @@
       "runtimeExecutable": "${execPath}",
       "args": ["--extensionDevelopmentPath=${workspaceFolder}"]
     }
-  ]
+  ],
+  "log": true
 }

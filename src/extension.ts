@@ -1,6 +1,8 @@
-import * as vscode from "vscode";
-import { MintFormattingProvider } from "./formatter";
 import * as cmd from "./commands";
+import * as vscode from "vscode";
+
+import { LanguageClient } from 'vscode-languageclient';
+import { MintFormattingProvider } from "./formatter";
 
 export async function activate(
   context: vscode.ExtensionContext,
@@ -26,6 +28,24 @@ export async function activate(
   vscode.commands.registerCommand("mint.start", cmd.mintStartCommand);
   vscode.commands.registerCommand("mint.test", cmd.mintTestCommand);
   vscode.commands.registerCommand("mint.version", cmd.mintVersionCommand);
+
+  // Create the language client
+	const client = new LanguageClient(
+		'mint-language-server',
+		'Mint Language Server',
+		{
+      command: '/home/gdot/.bin/mint-dev',
+      args: ['ls'],
+    },
+		{
+      documentSelector: [
+        {scheme: 'file', language: 'mint'},
+      ]
+    }
+	);
+
+	// Start the client
+  context.subscriptions.push(client.start());
 }
 
 export async function deactivate(isRestart: boolean = false): Promise<void> {
