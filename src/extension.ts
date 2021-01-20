@@ -32,13 +32,13 @@ export async function activate(
   vscode.commands.registerCommand("mint.test", cmd.mintTestCommand);
   vscode.commands.registerCommand("mint.version", cmd.mintVersionCommand);
 
-  let binaryLocation : string = vscode.workspace.getConfiguration('mint_language_server').get('location')
+  let binaryLocation : string = vscode.workspace.getConfiguration('mint.languageServer').get('location')
 
   if (binaryLocation) {
     if (fs.existsSync(binaryLocation)) {
       // Create the language client
       client = new LanguageClient(
-        'mint_language_server',
+        'mint_Language_Server',
         'Mint Language Server',
         {
           command: binaryLocation,

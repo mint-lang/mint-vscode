@@ -42,7 +42,7 @@
       "type": "object",
       "title": "Mint Language Server",
       "properties": {
-        "mint_language_server.location": {
+        "mint.languageServer.location": {
           "type": "string",
           "description": "Provide a custom location for the language server binary"
         }
