@@ -1,8 +1,11 @@
 import * as cmd from "./commands";
 import * as vscode from "vscode";
+import * as fs from "fs";
 
 import { LanguageClient } from 'vscode-languageclient';
 import { MintFormattingProvider } from "./formatter";
+
+let client: LanguageClient
 
 export async function activate(
   context: vscode.ExtensionContext,
@@ -29,26 +32,35 @@ export async function activate(
   vscode.commands.registerCommand("mint.test", cmd.mintTestCommand);
   vscode.commands.registerCommand("mint.version", cmd.mintVersionCommand);
 
-  // Create the language client
-	const client = new LanguageClient(
-		'mint-language-server',
-		'Mint Language Server',
-		{
-      command: '/home/gdot/.bin/mint-dev',
-      args: ['ls'],
-    },
-		{
-      documentSelector: [
-        {scheme: 'file', language: 'mint'},
-      ]
-    }
-	);
+  let binaryLocation : string = vscode.workspace.getConfiguration('mint_language_server').get('location')
 
-	// Start the client
-  context.subscriptions.push(client.start());
+  if (binaryLocation) {
+    if (fs.existsSync(binaryLocation)) {
+      // Create the language client
+      client = new LanguageClient(
+        'mint_language_server',
+        'Mint Language Server',
+        {
+          command: binaryLocation,
+          args: ['ls'],
+        },
+        {
+          documentSelector: [
+            {scheme: 'file', language: 'mint'},
+          ]
+        }
+      );
+    
+      // Start the client
+      context.subscriptions.push(client.start());
+    } else {
+      vscode.window.showErrorMessage('Mint binary not found! You specified ' + binaryLocation);
+    }
+  }
 }
 
 export async function deactivate(isRestart: boolean = false): Promise<void> {
   /// Set context deactivated
   vscode.commands.executeCommand("setContext", "mint:isActivated", false);
+  if (client) { client.stop() }
 }

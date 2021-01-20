@@ -38,6 +38,16 @@
     "Programming Languages"
   ],
   "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "Mint Language Server",
+      "properties": {
+        "mint_language_server.location": {
+          "type": "string",
+          "description": "Provide a custom location for the language server binary"
+        }
+      }
+    },
     "languages": [
       {
         "id": "mint",
