@@ -38,7 +38,7 @@ export async function activate(
     if (fs.existsSync(binaryLocation)) {
       // Create the language client
       client = new LanguageClient(
-        'mint_Language_Server',
+        'mint_language_server',
         'Mint Language Server',
         {
           command: binaryLocation,
