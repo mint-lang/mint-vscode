@@ -32,7 +32,7 @@ export async function activate(
   vscode.commands.registerCommand("mint.test", cmd.mintTestCommand);
   vscode.commands.registerCommand("mint.version", cmd.mintVersionCommand);
 
-  let binaryLocation : string = vscode.workspace.getConfiguration('mint.languageServer').get('location')
+  const binaryLocation : string = vscode.workspace.getConfiguration('mint.languageServer').get('location')
 
   if (binaryLocation) {
     if (fs.existsSync(binaryLocation)) {
@@ -60,7 +60,11 @@ export async function activate(
 }
 
 export async function deactivate(isRestart: boolean = false): Promise<void> {
-  /// Set context deactivated
+  // Set context deactivated
   vscode.commands.executeCommand("setContext", "mint:isActivated", false);
-  if (client) { client.stop() }
+  
+  // Stop the language server client. 
+  if (client) { 
+    client.stop() 
+  }
 }
