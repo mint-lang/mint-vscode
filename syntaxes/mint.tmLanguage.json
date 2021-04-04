@@ -11,6 +11,9 @@
     },
     {
       "include": "#keywords"
+    },
+    {
+      "include": "#scss"
     }
   ],
   "repository": {
@@ -60,6 +63,24 @@
         },
         {
           "include": "#strings"
+        }
+      ]
+    },
+    "scss": {
+      "begin": "(?=.*style\\s[^{]*\\s{)",
+      "end": "(^|\\G)\\s*$",
+      "contentName": "meta.embedded.block.scss",
+      "patterns": [
+        {
+          "include": "source.css.scss"
+        },
+        {
+          "match": "(?!\\s*style)[^{]*",
+          "name": "entity.name.class.mint"
+        },
+        {
+          "match": "\\s*style",
+          "name": "keyword.control.mint"
         }
       ]
     }
