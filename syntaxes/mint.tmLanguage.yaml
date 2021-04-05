@@ -1,45 +1,92 @@
-$schema: https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json
+---
+'$schema': https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json
 
 name: Mint
 scopeName: source.mint
 
 patterns:
-  - include: "#html"
-  - include: "#strings"
-  - include: "#keywords"
+  - include: '#comments'
+  - include: '#keywords'
+  - include: '#strings'
+  - include: '#html'
+  - include: '#scss'
+  - include: '#routes'
 
 repository:
+  comments:
+    name: comment.block.mint
+    begin: "/\\*"
+    end: "\\*/"
+
   keywords:
     patterns:
-      [
-        {
-          name: keyword.control.mint,
-          match: \b(global|state|encode|decode|for|module|provider|suite|test|parallel|sequence|case|try|catch|next|with|component|property|fun|style|routes|get|connect|exposing|record|store|use|when|if|else|where|enum|using|const)\b,
-        },
-        {
-          name: entity.name.class.mint,
-          match: "\\b[A-Z][A-Za-z0-9]*(\\.[A-Z][A-Za-z0-9]*)*\\b",
-        },
-        { name: constant.numeric.mint, match: "\\b(-)?[0-9]([0-9].)*\\b" },
-        { name: comment.block.mint, begin: "/\\*", end: "\\*/" },
-      ]
+      - name: keyword.control.mint
+        match: "(?<!\\.)\\b(global|state|encode|decode|for|module|provider|suite|test|parallel|sequence|case|try|catch|next|with|component|property|fun|style|routes|get|connect|exposing|record|store|use|when|if|else|where|enum|using|const|as)\\b"
+      - name: entity.name.class.mint
+        match: "\\b[A-Z][A-Za-z0-9]*([A-Z][A-Za-z0-9]*)*\\b"
+      - name: constant.numeric.mint
+        match: "\\d"
+      - name: storage.type.function.arrow.mint
+        match: '=>'
+      - name: punctuation.accessor.mint
+        match: "\\."
+      - name: constant.language.boolean.mint
+        match: "\\b(true|false)\\b"
+      - name: keyword.operator.expression.of.mint
+        match: "(?<!\\.)\\bof\\b"
+      - contentName: entity.name.function.mint
+        begin: "(?<=fun)\\s"
+        end: "\\s\\(|:|{$"
+      - name: entity.name.function.mint
+        match: "\\b(?<=[^[A-Za-z]]|\\.|\\s)[a-z][a-zA-Z0-9]*\\b(?=\\()"
+      - name: support.type.property-name.mint
+        match: "(?<!^)\\b[a-z][a-zA-Z]*\\b"
 
   strings:
     name: string.quoted.double.mint
     begin: '"'
     end: '"'
-    patterns: [{ name: constant.character.escape.mint, match: "\\\\." }]
+    patterns:
+      - name: constant.character.escape.mint
+        match: "\\\\."
+      - match: '#{'
+        name: punctuation.definition.template-expression.begin.mint
+      - match: '}'
+        name: punctuation.definition.template-expression.end.mint
+      - begin: '(?<=#{)'
+        end: '(?=})'
+        patterns:
+          - name: meta.embedded.line.mint
+            match: "\\."
+          - include: '#keywords'
 
   html:
-    begin: "(?i)(?=:(\\s*)Html(\\s*){)"
-    end: "(?<=>})|^\\s*}$"
-    contentName: embedded.html
+    begin: "(?<=.*:\\sHtml\\s{)"
+    end: '>.*}'
     patterns:
-      [
-        {
-          name: entity.name.class.mint,
-          match: "\\b[A-Z][A-Za-z0-9]*(\\.[A-Z][A-Za-z0-9]*)*\\b",
-        },
-        { include: text.html.basic },
-        { include: "#strings" },
-      ]
+      - include: '#comments'
+      - match: '<|>|/'
+        name: punctuation.definition.tag.html
+      - match: "(?<=<|</)[^A-Z|{][a-z]*[^\\s|:|>|/]*"
+        name: entity.name.tag.block.any.html
+      - match: "(?![A-Z][a-z]*)(?<=::)[^\\s|>]*"
+        name: entity.name.tag.css
+      - include: '#keywords'
+      - include: '#strings'
+
+  scss:
+    begin: "(?<=style)(?=\\s[^{]*\\s{)"
+    end: "(^|\\G)\\s*$"
+    contentName: meta.embedded.block.scss
+    patterns:
+      - include: source.css.scss
+      - match: '[^{]*'
+        name: entity.name.tag.css
+
+  routes:
+    begin: "(?<=routes\\s{)"
+    end: "\\G\\s*}"
+    patterns:
+      - match: "(/|\\*)[^{]*"
+        name: string.mint
+      - include: '#keywords'
