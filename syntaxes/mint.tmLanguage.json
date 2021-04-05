@@ -37,32 +37,32 @@
           "end": "\\*/"
         },
         {
-          "name": "storage.type.function.arrow",
+          "name": "storage.type.function.arrow.mint",
           "match": "=>"
         },
         {
-          "name": "punctuation.accessor",
+          "name": "punctuation.accessor.mint",
           "match": "\\."
         },
         {
-          "name": "constant.language.boolean",
+          "name": "constant.language.boolean.mint",
           "match": "\\b(true|false)\\b"
         },
         {
-          "name": "keyword.operator.expression.of",
+          "name": "keyword.operator.expression.of.mint",
           "match": "(?<!\\.)\\bof\\b"
         },
         {
-          "contentName": "entity.name.function",
+          "contentName": "entity.name.function.mint",
           "begin": "(?<=fun)\\s",
-          "end": "\\s(\\(|:|{)"
+          "end": "\\s\\(|:|{$"
         },
         {
-          "name": "entity.name.function",
+          "name": "entity.name.function.mint",
           "match": "\\b(?<=[^[A-Za-z]]|\\.|\\s)[a-z][a-zA-Z0-9]*\\b(?=\\()"
         },
         {
-          "name": "support.type.property-name",
+          "name": "support.type.property-name.mint",
           "match": "(?<!^)\\b[a-z][a-zA-Z]*\\b"
         }
       ]
@@ -75,6 +75,16 @@
         {
           "name": "constant.character.escape.mint",
           "match": "\\\\."
+        },
+        {
+          "begin": "#{",
+          "end": "}",
+          "name": "meta.template.expression.mint",
+          "patterns": [
+            {
+              "include": "#keywords"
+            }
+          ]
         }
       ]
     },
@@ -95,7 +105,7 @@
         },
         {
           "match": "=>",
-          "name": "storage.type.function.arrow"
+          "name": "storage.type.function.arrow.mint"
         },
         {
           "match": "<.*>",
