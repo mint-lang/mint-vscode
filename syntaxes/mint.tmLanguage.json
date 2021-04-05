@@ -4,6 +4,9 @@
   "scopeName": "source.mint",
   "patterns": [
     {
+      "include": "#comments"
+    },
+    {
       "include": "#keywords"
     },
     {
@@ -14,9 +17,17 @@
     },
     {
       "include": "#scss"
+    },
+    {
+      "include": "#routes"
     }
   ],
   "repository": {
+    "comments": {
+      "name": "comment.block.mint",
+      "begin": "/\\*",
+      "end": "\\*/"
+    },
     "keywords": {
       "patterns": [
         {
@@ -30,11 +41,6 @@
         {
           "name": "constant.numeric.mint",
           "match": "\\d"
-        },
-        {
-          "name": "comment.block.mint",
-          "begin": "/\\*",
-          "end": "\\*/"
         },
         {
           "name": "storage.type.function.arrow.mint",
@@ -77,10 +83,21 @@
           "match": "\\\\."
         },
         {
-          "begin": "#{",
-          "end": "}",
-          "name": "meta.template.expression.mint",
+          "match": "#{",
+          "name": "punctuation.definition.template-expression.begin.mint"
+        },
+        {
+          "match": "}",
+          "name": "punctuation.definition.template-expression.end.mint"
+        },
+        {
+          "begin": "(?<=#{)",
+          "end": "(?=})",
           "patterns": [
+            {
+              "name": "meta.embedded.line.mint",
+              "match": "\\."
+            },
             {
               "include": "#keywords"
             }
@@ -89,41 +106,34 @@
       ]
     },
     "html": {
-      "begin": "(?i)(?=:(\\s*)Html(\\s*){)",
-      "end": "(?<=})|^\\s*}$",
+      "begin": "(?<=.*:\\sHtml\\s{)",
+      "end": ">.*}",
       "patterns": [
         {
-          "name": "entity.name.class.mint",
-          "match": "\\b[A-Z][A-Za-z0-9]*\\b"
-        },
-        {
-          "include": "#strings"
+          "include": "#comments"
         },
         {
           "match": "<|>|/",
           "name": "punctuation.definition.tag.html"
         },
         {
-          "match": "=>",
-          "name": "storage.type.function.arrow.mint"
+          "match": "(?<=<|</)[^A-Z|{][a-z]*[^\\s|:|>|/]*",
+          "name": "entity.name.tag.block.any.html"
         },
         {
-          "match": "<.*>",
-          "patterns": [
-            {
-              "name": "entity.name.tag.block.any.html",
-              "match": "\\b(div)\\b"
-            },
-            {
-              "name": "constant.character.mint",
-              "match": "::[^\\s|>]*"
-            }
-          ]
+          "match": "(?![A-Z][a-z]*)(?<=::)[^\\s|>]*",
+          "name": "entity.name.tag.css"
+        },
+        {
+          "include": "#keywords"
+        },
+        {
+          "include": "#strings"
         }
       ]
     },
     "scss": {
-      "begin": "(?=.*style\\s[^{]*\\s{)",
+      "begin": "(?<=style)(?=\\s[^{]*\\s{)",
       "end": "(^|\\G)\\s*$",
       "contentName": "meta.embedded.block.scss",
       "patterns": [
@@ -131,12 +141,21 @@
           "include": "source.css.scss"
         },
         {
-          "match": "(?!\\s*style)[^{]*",
-          "name": "entity.name.class.mint"
+          "match": "[^{]*",
+          "name": "entity.name.tag.css"
+        }
+      ]
+    },
+    "routes": {
+      "begin": "(?<=routes\\s{)",
+      "end": "\\G\\s*}",
+      "patterns": [
+        {
+          "match": "(/|\\*)[^{]*",
+          "name": "string.mint"
         },
         {
-          "match": "\\s*style",
-          "name": "keyword.control.mint"
+          "include": "#keywords"
         }
       ]
     }
