@@ -65,7 +65,10 @@
       {
         "language": "mint",
         "scopeName": "source.mint",
-        "path": "./syntaxes/mint.tmLanguage.json"
+        "path": "./syntaxes/mint.tmLanguage.json",
+        "embeddedLanguages": {
+          "meta.embedded.block.css": "css"
+        }
       }
     ],
     "snippets": [
