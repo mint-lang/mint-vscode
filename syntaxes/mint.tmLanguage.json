@@ -4,13 +4,13 @@
   "scopeName": "source.mint",
   "patterns": [
     {
-      "include": "#html"
+      "include": "#keywords"
     },
     {
       "include": "#strings"
     },
     {
-      "include": "#keywords"
+      "include": "#html"
     }
   ],
   "repository": {
@@ -18,20 +18,49 @@
       "patterns": [
         {
           "name": "keyword.control.mint",
-          "match": "\\b(global|state|encode|decode|for|module|provider|suite|test|parallel|sequence|case|try|catch|next|with|component|property|fun|style|routes|get|connect|exposing|record|store|use|when|if|else|where|enum|using|const)\\b"
+          "match": "(?<!\\.)\\b(global|state|encode|decode|for|module|provider|suite|test|parallel|sequence|case|try|catch|next|with|component|property|fun|style|routes|get|connect|exposing|record|store|use|when|if|else|where|enum|using|const|as)\\b"
         },
         {
           "name": "entity.name.class.mint",
-          "match": "\\b[A-Z][A-Za-z0-9]*(\\.[A-Z][A-Za-z0-9]*)*\\b"
+          "match": "\\b[A-Z][A-Za-z0-9]*([A-Z][A-Za-z0-9]*)*\\b"
         },
         {
           "name": "constant.numeric.mint",
-          "match": "\\b(-)?[0-9]([0-9].)*\\b"
+          "match": "\\d"
         },
         {
           "name": "comment.block.mint",
           "begin": "/\\*",
           "end": "\\*/"
+        },
+        {
+          "name": "storage.type.function.arrow",
+          "match": "=>"
+        },
+        {
+          "name": "punctuation.accessor",
+          "match": "\\."
+        },
+        {
+          "name": "constant.language.boolean",
+          "match": "\\b(true|false)\\b"
+        },
+        {
+          "name": "keyword.operator.expression.of",
+          "match": "(?<!\\.)\\bof\\b"
+        },
+        {
+          "contentName": "entity.name.function",
+          "begin": "(?<=fun)\\s",
+          "end": "\\s(\\(|:|{)"
+        },
+        {
+          "name": "entity.name.function",
+          "match": "\\b(?<=[^[A-Za-z]]|\\.|\\s)[a-z][a-zA-Z0-9]*\\b(?=\\()"
+        },
+        {
+          "name": "support.type.property-name",
+          "match": "(?<!^)\\b[a-z][a-zA-Z]*\\b"
         }
       ]
     },
@@ -48,18 +77,35 @@
     },
     "html": {
       "begin": "(?i)(?=:(\\s*)Html(\\s*){)",
-      "end": "(?<=>})|^\\s*}$",
-      "contentName": "embedded.html",
+      "end": "(?<=})|^\\s*}$",
       "patterns": [
         {
           "name": "entity.name.class.mint",
-          "match": "\\b[A-Z][A-Za-z0-9]*(\\.[A-Z][A-Za-z0-9]*)*\\b"
-        },
-        {
-          "include": "text.html.basic"
+          "match": "\\b[A-Z][A-Za-z0-9]*\\b"
         },
         {
           "include": "#strings"
+        },
+        {
+          "match": "<|>|/",
+          "name": "punctuation.definition.tag.html"
+        },
+        {
+          "match": "=>",
+          "name": "storage.type.function.arrow"
+        },
+        {
+          "match": "<.*>",
+          "patterns": [
+            {
+              "name": "entity.name.tag.block.any.html",
+              "match": "\\b(div)\\b"
+            },
+            {
+              "name": "constant.character.mint",
+              "match": "::[^\\s|>]*"
+            }
+          ]
         }
       ]
     }
