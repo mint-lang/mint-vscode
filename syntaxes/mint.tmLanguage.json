@@ -7,6 +7,9 @@
       "include": "#comments"
     },
     {
+      "include": "#style"
+    },
+    {
       "include": "#keywords"
     },
     {
@@ -14,9 +17,6 @@
     },
     {
       "include": "#html"
-    },
-    {
-      "include": "#scss"
     },
     {
       "include": "#routes"
@@ -28,19 +28,56 @@
       "begin": "/\\*",
       "end": "\\*/"
     },
+    "html": {
+      "begin": "(?<=.*:\\sHtml\\s{)",
+      "beginCaptures": {
+        "0": {
+          "name": "block.open.html.mint"
+        }
+      },
+      "end": ">.*}",
+      "endCaptures": {
+        "0": {
+          "name": "block.close.html.mint"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#comments"
+        },
+        {
+          "match": "<|>|/",
+          "name": "punctuation.definition.tag.html.mint"
+        },
+        {
+          "match": "(?<=<|</)[^A-Z|{][a-z]*[^\\s|:|>|/]*",
+          "name": "entity.name.tag.block.any.html.mint"
+        },
+        {
+          "match": "(?![A-Z][a-z]*)(?<=::)[^\\s|>|::|\\(]*",
+          "name": "entity.name.tag.css.mint"
+        },
+        {
+          "include": "#keywords"
+        },
+        {
+          "include": "#strings"
+        }
+      ]
+    },
     "keywords": {
       "patterns": [
         {
           "name": "keyword.control.mint",
-          "match": "(?<!\\.)\\b(global|state|encode|decode|for|module|provider|suite|test|parallel|sequence|case|try|catch|next|with|component|property|fun|style|routes|get|connect|exposing|record|store|use|when|if|else|where|enum|using|const|as)\\b"
+          "match": "(?<!\\.|[a-zA-Z0-9])\\b(global|state|encode|decode|for|module|provider|suite|test|parallel|sequence|case|try|catch|next|with|component|property|fun|style|routes|get|connect|exposing|record|store|use|when|if|else|where|enum|using|const|as)\\b(?![a-zA-Z0-9]|\\.|=)"
         },
         {
           "name": "entity.name.class.mint",
-          "match": "\\b[A-Z][A-Za-z0-9]*([A-Z][A-Za-z0-9]*)*\\b"
+          "match": "\\b[A-Z][A-Za-z0-9]*\\b"
         },
         {
           "name": "constant.numeric.mint",
-          "match": "\\d"
+          "match": "\\d[^\\s]*"
         },
         {
           "name": "storage.type.function.arrow.mint",
@@ -65,11 +102,80 @@
         },
         {
           "name": "entity.name.function.mint",
-          "match": "\\b(?<=[^[A-Za-z]]|\\.|\\s)[a-z][a-zA-Z0-9]*\\b(?=\\()"
+          "match": "\\b(?<=[^A-Za-z]|\\.|\\s)[a-z][a-zA-Z0-9]*\\b(?=\\()"
         },
         {
           "name": "support.type.property-name.mint",
-          "match": "(?<!^)\\b[a-z][a-zA-Z]*\\b"
+          "match": "(?<!^)\\b[a-z][a-zA-Z0-9\\-]*\\b"
+        }
+      ]
+    },
+    "routes": {
+      "begin": "(?<=routes\\s{)",
+      "beginCaptures": {
+        "0": {
+          "name": "block.open.routes.mint"
+        }
+      },
+      "end": "\\G\\s*}",
+      "endCaptures": {
+        "0": {
+          "name": "block.close.routes.mint"
+        }
+      },
+      "patterns": [
+        {
+          "match": "(/|\\*)[^{]*",
+          "name": "string.route.name.mint"
+        },
+        {
+          "include": "#keywords"
+        }
+      ]
+    },
+    "scss": {
+      "patterns": [
+        {
+          "include": "#style-nesting"
+        },
+        {
+          "include": "source.css#pseudo-classes"
+        },
+        {
+          "include": "source.css#pseudo-elements"
+        },
+        {
+          "include": "source.css.scss#general"
+        },
+        {
+          "include": "source.css.scss#selectors"
+        },
+        {
+          "include": "source.css.scss#properties"
+        },
+        {
+          "include": "source.css.scss#at_rule_import"
+        },
+        {
+          "include": "source.css.scss#at_rule_media"
+        },
+        {
+          "include": "source.css.scss#at_rule_charset"
+        },
+        {
+          "include": "source.css.scss#at_rule_namespace"
+        },
+        {
+          "include": "source.css.scss#at_rule_fontface"
+        },
+        {
+          "include": "source.css.scss#at_rule_page"
+        },
+        {
+          "include": "source.css.scss#at_rule_keyframes"
+        },
+        {
+          "include": "source.css.scss#at_rule_supports"
         }
       ]
     },
@@ -105,57 +211,86 @@
         }
       ]
     },
-    "html": {
-      "begin": "(?<=.*:\\sHtml\\s{)",
-      "end": ">.*}",
-      "patterns": [
-        {
-          "include": "#comments"
-        },
-        {
-          "match": "<|>|/",
-          "name": "punctuation.definition.tag.html"
-        },
-        {
-          "match": "(?<=<|</)[^A-Z|{][a-z]*[^\\s|:|>|/]*",
-          "name": "entity.name.tag.block.any.html"
-        },
-        {
-          "match": "(?![A-Z][a-z]*)(?<=::)[^\\s|>]*",
-          "name": "entity.name.tag.css"
-        },
-        {
-          "include": "#keywords"
-        },
-        {
-          "include": "#strings"
+    "style": {
+      "begin": "(?<=style\\s)(?:[^{]*\\s)({)",
+      "beginCaptures": {
+        "0": {
+          "name": "block.open.style.mint"
         }
-      ]
-    },
-    "scss": {
-      "begin": "(?<=style)(?=\\s[^{]*\\s{)",
-      "end": "(^|\\G)\\s*$",
-      "contentName": "meta.embedded.block.scss",
+      },
       "patterns": [
         {
-          "include": "source.css.scss"
+          "begin": "if\\s?\\([^\\)]*\\)\\s?{",
+          "beginCaptures": {
+            "0": {
+              "name": "block.open.if.mint"
+            }
+          },
+          "end": "}",
+          "endCaptures": {
+            "0": {
+              "name": "block.close.if.mint"
+            }
+          },
+          "name": "expression.group.mint",
+          "patterns": [
+            {
+              "include": "#scss"
+            }
+          ]
         },
         {
-          "match": "[^{]*",
-          "name": "entity.name.tag.css"
+          "begin": "case\\s?\\([^\\)]*\\)\\s?{",
+          "patterns": [
+            {
+              "include": "#keywords"
+            },
+            {
+              "include": "#scss"
+            }
+          ],
+          "name": "expression.group.mint",
+          "beginCaptures": {
+            "0": {
+              "name": "block.open.case.mint"
+            }
+          },
+          "end": "}",
+          "endCaptures": {
+            "0": {
+              "name": "block.close.case.mint"
+            }
+          }
+        },
+        {
+          "include": "#scss"
         }
-      ]
+      ],
+      "end": "}",
+      "endCaptures": {
+        "0": {
+          "name": "block.close.style.mint"
+        }
+      },
+      "name": "expression.group.mint"
     },
-    "routes": {
-      "begin": "(?<=routes\\s{)",
-      "end": "\\G\\s*}",
+    "style-nesting": {
+      "begin": "{",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.section.property-list.begin.bracket.curly.scss.mint"
+        }
+      },
+      "end": "}",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.section.property-list.end.bracket.curly.scss.mint"
+        }
+      },
+      "name": "meta.property-list.scss.mint",
       "patterns": [
         {
-          "match": "(/|\\*)[^{]*",
-          "name": "string.mint"
-        },
-        {
-          "include": "#keywords"
+          "include": "#scss"
         }
       ]
     }
