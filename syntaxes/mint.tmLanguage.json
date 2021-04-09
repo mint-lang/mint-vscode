@@ -38,7 +38,7 @@
           "name": "meta.block.open.html.mint"
         }
       },
-      "end": ">.*}",
+      "end": "}",
       "endCaptures": {
         "0": {
           "name": "meta.block.close.html.mint"
@@ -47,7 +47,17 @@
       "name": "meta.block.html.mint",
       "patterns": [
         {
+          "include": "#html-innards"
+        }
+      ]
+    },
+    "html-innards": {
+      "patterns": [
+        {
           "include": "#comments"
+        },
+        {
+          "include": "#html-nesting"
         },
         {
           "match": "<|>|/",
@@ -66,6 +76,25 @@
         },
         {
           "include": "#strings"
+        }
+      ]
+    },
+    "html-nesting": {
+      "begin": "{",
+      "beginCaptures": {
+        "0": { "name": "punctuation.block.nested.open.mint" }
+      },
+      "end": "}",
+      "endCaptures": {
+        "0": { "name": "punctuation.block.nested.close.mint" }
+      },
+      "name": "meta.block.nested.mint",
+      "patterns": [
+        {
+          "include": "#html-innards"
+        },
+        {
+          "include": "#html-nesting"
         }
       ]
     },
