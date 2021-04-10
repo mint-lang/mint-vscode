@@ -82,13 +82,13 @@
     "html-nesting": {
       "begin": "{",
       "beginCaptures": {
-        "0": { "name": "punctuation.block.nested.open.mint" }
+        "0": { "name": "meta.block.open.nested.html.mint" }
       },
       "end": "}",
       "endCaptures": {
-        "0": { "name": "punctuation.block.nested.close.mint" }
+        "0": { "name": "meta.block.close.nested.html.mint" }
       },
-      "name": "meta.block.nested.mint",
+      "name": "meta.block.nested.html.mint",
       "patterns": [
         {
           "include": "#html-innards"
@@ -137,7 +137,7 @@
           "name": "storage.type.function.arrow.mint"
         },
         {
-          "match": "\\.",
+          "match": "(?<!\\.)\\.(?!\\.)",
           "name": "punctuation.accessor.mint"
         },
         {
@@ -149,12 +149,12 @@
           "name": "punctuation.block.close.mint"
         },
         {
-          "match": ":(?!:)",
+          "match": "(?<!:):(?!:)",
           "name": "punctuation.separator.mint"
         },
         {
-          "match": "::(?!:|\\s)",
-          "name": "meta.class.separator.mint"
+          "match": "(?<!:|\\s)::(?!:|\\s)",
+          "name": "keyword.operator.class.mint"
         },
         {
           "match": "\\(",
@@ -165,8 +165,44 @@
           "name": "punctuation.params.close.mint"
         },
         {
+          "match": "\\[",
+          "name": "punctuation.array.open.mint"
+        },
+        {
+          "match": "\\]",
+          "name": "punctuation.array.close.mint"
+        },
+        {
+          "match": ",",
+          "name": "punctuation.separator.comma.mint"
+        },
+        {
+          "match": "\\+|-|/|\\*",
+          "name": "keyword.operator.arithmetic.mint"
+        },
+        {
+          "match": ">=?|<=?",
+          "name": "keyword.operator.relational.mint"
+        },
+        {
+          "match": "(?<!=)=(?!=)",
+          "name": "keyword.operator.assignment.mint"
+        },
+        {
+          "match": "(?<!=)==(?!=)",
+          "name": "keyword.operator.equality.mint"
+        },
+        {
+          "match": "\\.\\.\\.",
+          "name": "keyword.operator.spread.mint"
+        },
+        {
           "match": "\\|>",
-          "name": "meta.operator.pipe.mint"
+          "name": "keyword.operator.pipe.mint"
+        },
+        {
+          "match": "\\|(?!>)",
+          "name": "keyword.operator.copy.mint"
         },
         {
           "match": "\\b(true|false)\\b",
@@ -197,12 +233,13 @@
           "name": "meta.block.open.routes.mint"
         }
       },
-      "end": "\\G\\s*}",
+      "end": "}",
       "endCaptures": {
         "0": {
           "name": "meta.block.close.routes.mint"
         }
       },
+      "name": "meta.block.routes.mint",
       "patterns": [
         {
           "include": "#comments"
@@ -210,6 +247,32 @@
         {
           "match": "(/|\\*)[^{]*",
           "name": "string.route.name.mint"
+        },
+        {
+          "include": "#routes-nesting"
+        },
+        {
+          "include": "#keywords"
+        }
+      ]
+    },
+    "routes-nesting": {
+      "begin": "{",
+      "beginCaptures": {
+        "0": {
+          "name": "meta.block.open.nested.routes.mint"
+        }
+      },
+      "end": "}",
+      "endCaptures": {
+        "0": {
+          "name": "meta.block.close.nested.routes.mint"
+        }
+      },
+      "name": "meta.block.nested.routes.mint",
+      "patterns": [
+        {
+          "include": "#routes-nesting"
         },
         {
           "include": "#keywords"
@@ -322,7 +385,7 @@
           "name": "meta.block.close.style.mint"
         }
       },
-      "name": "expression.group.mint",
+      "name": "meta.block.style.mint",
       "patterns": [
         {
           "include": "#style-conditionals"
@@ -333,7 +396,7 @@
       ]
     },
     "style-conditionals": {
-      "begin": "(else)?\\s*(if|case)\\s*\\(.*\\)\\s*{",
+      "begin": "((?:else\\s*)?if\\s*\\(.*\\)\\s*{|(?<=})\\s*else\\s*(?!if){|case\\s*\\(.*\\)\\s*{)",
       "beginCaptures": {
         "0": {
           "name": "meta.block.open.style.conditional.mint",
@@ -378,17 +441,20 @@
       "begin": "{",
       "beginCaptures": {
         "0": {
-          "name": "punctuation.block.open.style.nested.mint"
+          "name": "meta.block.open.nested.style.mint"
         }
       },
       "end": "}",
       "endCaptures": {
         "0": {
-          "name": "punctuation.block.close.style.nested.mint"
+          "name": "meta.block.close.nested.style.mint"
         }
       },
-      "name": "meta.block.style.nested.mint",
+      "name": "meta.block.nested.style.mint",
       "patterns": [
+        {
+          "include": "#style-conditionals"
+        },
         {
           "include": "#css"
         }
