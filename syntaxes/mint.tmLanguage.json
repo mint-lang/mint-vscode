@@ -251,7 +251,7 @@
           "name": "entity.name.tag.block.any.html.mint"
         },
         {
-          "match": "(?![A-Z][a-z]*)(?<=::)[^\\s|>|::|\\(]*",
+          "match": "(?![A-Z][a-z]*)(?<=::)[^\\s|>|::|\\(|/]*",
           "name": "entity.name.tag.css.mint"
         },
         {
