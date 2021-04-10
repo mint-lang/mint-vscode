@@ -23,6 +23,9 @@
     },
     {
       "include": "#strings"
+    },
+    {
+      "include": "#directives"
     }
   ],
   "repository": {
@@ -177,11 +180,42 @@
         }
       ]
     },
+    "directives": {
+      "patterns": [
+        {
+          "begin": "(@(svg|format|documentation))((\\().*\\))?",
+          "beginCaptures": {
+            "0": {
+              "name": "keyword.directive.mint",
+              "patterns": [
+                { "match": "(?<=@svg\\()[^\\)]*", "name": "string.unquoted.mint" },
+                {
+                  "match": "(?<=@documentation\\()[^\\)]*",
+                  "name": "entity.name.class.mint"
+                }
+              ]
+            }
+          },
+          "end": "\\G"
+        },
+        {
+          "begin": "(?<=@format)\\s*{",
+          "end": "}",
+          "name": "meta.block.format.mint",
+          "patterns": [
+            {
+              "include": "#html-innards"
+            }
+          ]
+        }
+      ]
+    },
     "html": {
-      "begin": "(?<=:\\sHtml\\s){",
+      "begin": "fun\\s+render\\s*(:\\s*Html\\s*)?{",
       "beginCaptures": {
         "0": {
-          "name": "meta.block.open.html.mint"
+          "name": "meta.block.open.html.mint",
+          "patterns": [{ "include": "#keywords" }]
         }
       },
       "end": "}",
@@ -199,6 +233,9 @@
     },
     "html-innards": {
       "patterns": [
+        {
+          "include": "#directives"
+        },
         {
           "include": "#comments"
         },
@@ -267,8 +304,16 @@
     "keywords": {
       "patterns": [
         {
-          "match": "(?<!\\.|[a-zA-Z0-9])\\b(global|state|encode|decode|for|module|provider|suite|test|parallel|sequence|case|try|catch|next|with|component|property|fun|style|routes|get|connect|exposing|record|store|use|when|if|else|where|enum|using|const|as)\\b(?![a-zA-Z0-9]|\\.|=)",
+          "match": "(?<!\\.|[a-zA-Z0-9])\\b(global|state|encode|decode|for|module|provider|suite|test|parallel|sequence|case|try|catch|finally|next|with|component|property|fun|style|routes|get|connect|exposing|record|store|use|when|if|else|where|enum|using|const|as|or)\\b(?![a-zA-Z0-9]|\\.|\\s*(=|}))",
           "name": "keyword.control.mint"
+        },
+        {
+          "match": "/.*/",
+          "name": "string.regexp.mint"
+        },
+        {
+          "match": "(?<=/)(g|i|m|y|u|s)",
+          "name": "constant.regexp"
         },
         {
           "match": "\\b[A-Z][A-Za-z0-9]*\\b",
@@ -367,7 +412,11 @@
           "name": "entity.name.function.mint"
         },
         {
-          "match": "(?<!^)\\b[a-z][a-zA-Z0-9\\-]*\\b",
+          "match": "@[A-Z]+",
+          "name": "keyword.other.env.mint"
+        },
+        {
+          "match": "\\b[a-z][a-zA-Z0-9\\-]*\\b",
           "name": "support.type.property-name.mint"
         }
       ]
