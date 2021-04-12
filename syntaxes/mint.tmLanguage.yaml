@@ -1,11 +1,13 @@
-$schema: 'https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json'
+---
+'$schema': https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json
 name: Mint
 scopeName: source.mint
 
 patterns:
   - include: '#comments'
-  - include: '#style'
   - include: '#html'
+  - include: '#regex'
+  - include: '#style'
   - include: '#js'
   - include: '#routes'
   - include: '#keywords'
@@ -15,27 +17,27 @@ patterns:
 repository:
   comments:
     name: comment.block.mint
-    begin: /\*
-    end: \*/
+    begin: "/\\*"
+    end: "\\*/"
 
   css:
     patterns:
-      - match: //
+      - match: '//'
         comment: invalidate as css comment block
       - include: '#style-nesting'
-      - include: 'source.css#pseudo-classes'
-      - include: 'source.css#pseudo-elements'
-      - include: 'source.css.scss#general'
-      - include: 'source.css.scss#selectors'
-      - include: 'source.css.scss#properties'
-      - include: 'source.css.scss#at_rule_import'
-      - include: 'source.css.scss#at_rule_media'
-      - include: 'source.css.scss#at_rule_charset'
-      - include: 'source.css.scss#at_rule_namespace'
-      - include: 'source.css.scss#at_rule_fontface'
-      - include: 'source.css.scss#at_rule_page'
-      - include: 'source.css.scss#at_rule_supports'
-      - begin: '(?<=^|\s)(@)(?:-(?:webkit|moz)-)?keyframes\b'
+      - include: source.css#pseudo-classes
+      - include: source.css#pseudo-elements
+      - include: source.css.scss#general
+      - include: source.css.scss#selectors
+      - include: source.css.scss#properties
+      - include: source.css.scss#at_rule_import
+      - include: source.css.scss#at_rule_media
+      - include: source.css.scss#at_rule_charset
+      - include: source.css.scss#at_rule_namespace
+      - include: source.css.scss#at_rule_fontface
+      - include: source.css.scss#at_rule_page
+      - include: source.css.scss#at_rule_supports
+      - begin: "(?<=^|\\s)(@)(?:-(?:webkit|moz)-)?keyframes\\b"
         beginCaptures:
           '0':
             name: keyword.control.at-rule.keyframes.scss
@@ -44,7 +46,7 @@ repository:
         end: '(?<=})'
         name: meta.at-rule.keyframes.scss
         patterns:
-          - match: '(?<=@keyframes)\s+((?:[_A-Za-z][-\w]|-[_A-Za-z])[-\w]*)'
+          - match: "(?<=@keyframes)\\s+((?:[_A-Za-z][-\\w]|-[_A-Za-z])[-\\w]*)"
             captures:
               '1':
                 name: entity.name.function.scss
@@ -59,10 +61,10 @@ repository:
             name: string.quoted.double.scss
             contentName: entity.name.function.scss
             patterns:
-              - match: '\\(\h{1,6}|.)'
+              - match: "\\\\(\\h{1,6}|.)"
                 name: constant.character.escape.scss
-              - include: 'source.css.scss#interpolation'
-          - begin: (?<=@keyframes)\s+(')
+              - include: source.css.scss#interpolation
+          - begin: "(?<=@keyframes)\\s+(')"
             beginCaptures:
               '1':
                 name: punctuation.definition.string.begin.scss
@@ -73,9 +75,9 @@ repository:
             name: string.quoted.single.scss
             contentName: entity.name.function.scss
             patterns:
-              - match: '\\(\h{1,6}|.)'
+              - match: "\\\\(\\h{1,6}|.)"
                 name: constant.character.escape.scss
-              - include: 'source.css.scss#interpolation'
+              - include: source.css.scss#interpolation
           - begin: '{'
             beginCaptures:
               '0':
@@ -86,100 +88,73 @@ repository:
                 name: punctuation.section.keyframes.end.scss
             patterns:
               - include: '#comments'
-              - match: '\b(?:(?:100|[1-9]\d|\d)%|from|to)(?=\s*{)'
+              - match: "\\b(?:(?:100|[1-9]\\d|\\d)%|from|to)(?=\\s*{)"
                 name: entity.other.attribute-name.scss
               - include: '#style-nesting'
 
   directives:
-    patterns:
-      - begin: (@(svg|format|documentation))((\().*\))?
-        beginCaptures:
-          '0':
-            name: keyword.directive.mint
-            patterns:
-              - match: '(?<=@svg\()[^\)]*'
-                name: string.unquoted.mint
-              - match: '(?<=@documentation\()[^\)]*'
-                name: entity.name.class.mint
-        end: \G
-      - begin: '(?<=@format)\s*{'
-        end: '}'
-        name: meta.block.format.mint
+    begin: "(@(svg|format|documentation))((\\().*\\))?"
+    beginCaptures:
+      '0':
+        name: keyword.directive.mint
         patterns:
-          - include: '#html-innards'
+          - match: "(?<=@svg\\()[^\\)]*"
+            name: string.unquoted.mint
+          - match: "(?<=@documentation\\()[^\\)]*"
+            name: entity.name.class.mint
+    end: "\\G"
 
   html:
-    begin: 'fun\s+render\s*(:\s*Html\s*)?{'
-    beginCaptures:
-      '0':
-        name: meta.block.open.html.mint
+    patterns:
+      - begin: '<{'
+        beginCaptures:
+          '0':
+            name: expression.embedded.open.mint
+        end: '}>'
+        endCaptures:
+          '0':
+            name: expression.embedded.close.mint
+        name: expression.embedded.mint
         patterns:
+          - include: '*'
+      - begin: '<(?!{)'
+        beginCaptures:
+          '0':
+            name: punctuation.definition.tag.html.mint
+        end: '>'
+        endCaptures:
+          '0':
+            name: punctuation.definition.tag.html.mint
+        name: meta.tag.html.mint
+        patterns:
+          - match: '(?<=<)/|/(?=>)'
+            name: punctuation.definition.tag.html.mint
+          - match: "(?<=<|</)[^A-Z|{][a-z]*[^\\s|:|>|/]*"
+            name: entity.name.tag.block.any.html.mint
+          - match: "(?![A-Z][a-z]*)(?<=::)[^\\s|>|::|\\(|/]*"
+            name: entity.name.tag.css.mint
+          - include: '#regex'
+          - include: '#strings'
           - include: '#keywords'
-    end: '}'
-    endCaptures:
-      '0':
-        name: meta.block.close.html.mint
-    name: meta.block.html.mint
-    patterns:
-      - include: '#html-innards'
-
-  html-innards:
-    patterns:
-      - include: '#directives'
-      - include: '#comments'
-      - include: '#html-nesting'
-      - match: <|>|/
-        name: punctuation.definition.tag.html.mint
-      - match: '(?<=<|</)[^A-Z|{][a-z]*[^\s|:|>|/]*'
-        name: entity.name.tag.block.any.html.mint
-      - match: '(?![A-Z][a-z]*)(?<=::)[^\s|>|::|\(|/]*'
-        name: entity.name.tag.css.mint
-      - include: '#keywords'
-      - include: '#strings'
-
-  html-nesting:
-    begin: '{'
-    beginCaptures:
-      '0':
-        name: meta.block.open.nested.html.mint
-    end: '}'
-    endCaptures:
-      '0':
-        name: meta.block.close.nested.html.mint
-    name: meta.block.nested.html.mint
-    patterns:
-      - include: '#html-innards'
-      - include: '#html-nesting'
 
   js:
     begin: '`'
-    beginCaptures:
-      '0':
-        name: meta.block.open.inline.js.mint
     end: '`'
-    endCaptures:
-      '0':
-        name: meta.block.close.inline.js.mint
     patterns:
       - include: source.js
-    name: meta.block.inline.js.mint
+    name: meta.embedded.block.js.mint
 
   keywords:
     patterns:
-      - match: >-
-          (?<!\.|[a-zA-Z0-9])\b(global|state|encode|decode|for|module|provider|suite|test|parallel|sequence|case|try|catch|finally|next|with|component|property|fun|style|routes|get|connect|exposing|record|store|use|when|if|else|where|enum|using|const|as|or)\b(?![a-zA-Z0-9]|\.|\s*(=|}))
+      - match: "(?<!\\.|[a-zA-Z0-9])\\b(global|state|encode|decode|for|module|provider|suite|test|parallel|sequence|case|try|catch|finally|next|with|component|property|fun|style|routes|get|connect|exposing|record|store|use|when|if|else|where|enum|using|const|as|or)\\b(?![a-zA-Z0-9]|\\.|\\s*(=|}))"
         name: keyword.control.mint
-      - match: /.*/
-        name: string.regexp.mint
-      - match: (?<=/)(g|i|m|y|u|s)
-        name: constant.regexp
-      - match: '\b[A-Z][A-Za-z0-9]*\b'
+      - match: "\\b[A-Z][A-Za-z0-9]*\\b|\\b[A-Z_]+\\b"
         name: entity.name.class.mint
-      - match: \d\.?
+      - match: "\\d\\.?"
         name: constant.numeric.mint
-      - match: =>
+      - match: '=>'
         name: storage.type.function.arrow.mint
-      - match: (?<!\.)\.(?!\.)
+      - match: "(?<!\\.)\\.(?!\\.)"
         name: punctuation.accessor.mint
       - match: '{'
         name: punctuation.block.open.mint
@@ -187,47 +162,54 @@ repository:
         name: punctuation.block.close.mint
       - match: '(?<!:):(?!:)'
         name: punctuation.separator.mint
-      - match: '(?<!:|\s)::(?!:|\s)'
+      - match: "(?<!:|\\s)::(?!:|\\s)"
         name: keyword.operator.class.mint
-      - match: \(
+      - match: "\\("
         name: punctuation.params.open.mint
-      - match: \)
+      - match: "\\)"
         name: punctuation.params.close.mint
-      - match: '\['
+      - match: "\\["
         name: punctuation.array.open.mint
-      - match: '\]'
+      - match: "\\]"
         name: punctuation.array.close.mint
       - match: ','
         name: punctuation.separator.comma.mint
-      - match: \+|-|/|\*
+      - match: "\\+|-|/|\\*"
         name: keyword.operator.arithmetic.mint
       - match: '>=?|<=?'
         name: keyword.operator.relational.mint
-      - match: (?<!=)=(?!=)
+      - match: '(?<!=)=(?!=)'
         name: keyword.operator.assignment.mint
-      - match: (?<!=)==(?!=)
+      - match: '(?<!=)==(?!=)'
         name: keyword.operator.equality.mint
-      - match: \.\.\.
+      - match: "\\.\\.\\."
         name: keyword.operator.spread.mint
-      - match: \|>
+      - match: "\\|>"
         name: keyword.operator.pipe.mint
-      - match: \|(?!>)
+      - match: "\\|(?!>)"
         name: keyword.operator.copy.mint
-      - match: \b(true|false)\b
+      - match: "\\b(true|false)\\b"
         name: constant.language.boolean.mint
-      - match: (?<!\.)\bof\b
+      - match: "(?<!\\.)\\bof\\b"
         name: keyword.operator.expression.of.mint
-      - match: '(?<=\s\bfun\b\s)[^\(|:|{]*'
+      - match: "(?<=\\s\\bfun\\b\\s)[^\\(|:|{]*"
         name: entity.name.function.mint
-      - match: '\b(?<=[^A-Za-z]|\.|\s)[a-z][a-zA-Z0-9]*\b(?=\()'
+      - match: "\\b(?<=[^A-Za-z]|\\.|\\s)[a-z][a-zA-Z0-9]*\\b(?=\\()"
         name: entity.name.function.mint
       - match: '@[A-Z]+'
         name: keyword.other.env.mint
-      - match: '\b[a-z][a-zA-Z0-9\-]*\b'
+      - match: "\\b[a-z][a-zA-Z0-9\\-]*\\b"
         name: support.type.property-name.mint
 
+  regex:
+    patterns:
+      - match: "/(?:\\\\/|[^/])+/"
+        name: string.regexp.mint
+      - match: '(?<=/)(g|i|m|y|u|s)'
+        name: constant.regexp
+
   routes:
-    begin: '(?<=routes\s{)'
+    begin: "(?<=routes\\s{)"
     beginCaptures:
       '0':
         name: meta.block.open.routes.mint
@@ -238,7 +220,7 @@ repository:
     name: meta.block.routes.mint
     patterns:
       - include: '#comments'
-      - match: '(/|\*)[^{]*'
+      - match: "(/|\\*)[^{]*"
         name: string.route.name.mint
       - include: '#routes-nesting'
       - include: '#keywords'
@@ -264,7 +246,7 @@ repository:
     end: '"'
     patterns:
       - name: constant.character.escape.mint
-        match: \\.
+        match: "\\\\."
       - begin: '#{'
         beginCaptures:
           '0':
@@ -276,21 +258,21 @@ repository:
         name: meta.embedded.line.mint
         patterns:
           - name: punctuation.accessor.mint
-            match: \.
+            match: "\\."
           - include: '#keywords'
 
   style:
-    begin: '(?<=style\s)[^{]*\s{'
+    begin: "(?<=style\\s)[^{]*\\s{"
     beginCaptures:
       '0':
         name: meta.block.open.style.mint
         patterns:
-          - begin: \(
-            end: \)
+          - begin: "\\("
+            end: "\\)"
             patterns:
               - include: '#keywords'
             name: punctuation.params.style.mint
-          - match: '\b[^\s|\(|\:]*\b'
+          - match: "\\b[^\\s|\\(|\\:]*\\b"
             name: entity.name.tag.css.mint
     end: '}'
     endCaptures:
@@ -302,7 +284,7 @@ repository:
       - include: '#css'
 
   style-conditionals:
-    begin: '((?:else\s*)?if\s*\(.*\)\s*{|(?<=})\s*else\s*(?!if){|case\s*\(.*\)\s*{)'
+    begin: "((?:else\\s*)?if\\s*\\(.*\\)\\s*{|(?<=})\\s*else\\s*(?!if){|case\\s*\\(.*\\)\\s*{)"
     beginCaptures:
       '0':
         name: meta.block.open.style.conditional.mint
@@ -316,7 +298,7 @@ repository:
           - include: '#keywords'
     patterns:
       - include: '#comments'
-      - begin: '(?=:\s[^A-Z])'
+      - begin: "(?=:\\s[^A-Z])"
         end: '[^;]*$'
         name: meta.embedded.line.scss.mint
         patterns:
