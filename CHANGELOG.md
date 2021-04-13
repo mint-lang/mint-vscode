@@ -1,5 +1,9 @@
 # Mint VS Code Changelog
 
+## 0.5.0
+
+- Better syntax highlighting ([#21](https://github.com/mint-lang/mint-vscode/pull/21))
+
 ## 0.4.0
 
 - Added support for langauge server ([#20](https://github.com/mint-lang/mint-vscode/pull/20))
