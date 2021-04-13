@@ -105,37 +105,43 @@ repository:
     end: "\\G"
 
   html:
+    begin: '<{?'
+    beginCaptures:
+      '0':
+        name: punctuation.definition.tag.html.mint
+    end: '}?>'
+    endCaptures:
+      '0':
+        name: punctuation.definition.tag.html.mint
+    name: meta.tag.html.mint
     patterns:
-      - begin: '<{'
-        beginCaptures:
-          '0':
-            name: expression.embedded.open.mint
-        end: '}>'
-        endCaptures:
-          '0':
-            name: expression.embedded.close.mint
-        name: expression.embedded.mint
-        patterns:
-          - include: '*'
-      - begin: '<(?!{)'
-        beginCaptures:
-          '0':
-            name: punctuation.definition.tag.html.mint
-        end: '>'
-        endCaptures:
-          '0':
-            name: punctuation.definition.tag.html.mint
-        name: meta.tag.html.mint
-        patterns:
-          - match: '(?<=<)/|/(?=>)'
-            name: punctuation.definition.tag.html.mint
-          - match: "(?<=<|</)[^A-Z|{][a-z]*[^\\s|:|>|/]*"
-            name: entity.name.tag.block.any.html.mint
-          - match: "(?![A-Z][a-z]*)(?<=::)[^\\s|>|::|\\(|/]*"
-            name: entity.name.tag.css.mint
-          - include: '#regex'
-          - include: '#strings'
-          - include: '#keywords'
+      - match: '(?<=<)/|/(?=>)'
+        name: punctuation.definition.tag.html.mint
+      - match: "(?<=<|</)[^A-Z|{][a-z]*[^\\s|:|>|/]*"
+        name: entity.name.tag.block.any.html.mint
+      - match: "(?![A-Z][a-z]*)(?<=::)[^\\s|>|::|\\(|/]*"
+        name: entity.name.tag.css.mint
+      - include: '#html'
+      - include: '#directives'
+      - include: '#regex'
+      - include: '#js'
+      - include: '#strings'
+      - include: '#keywords'
+
+  interpolation:
+    begin: '#{'
+    beginCaptures:
+      '0':
+        name: punctuation.definition.template-expression.begin.mint
+    end: '}'
+    endCaptures:
+      '0':
+        name: punctuation.definition.template-expression.end.mint
+    name: meta.embedded.line.mint
+    patterns:
+      - name: punctuation.accessor.mint
+        match: "\\."
+      - include: '#keywords'
 
   js:
     begin: '`'
@@ -176,7 +182,7 @@ repository:
         name: punctuation.separator.comma.mint
       - match: "\\+|-|/|\\*"
         name: keyword.operator.arithmetic.mint
-      - match: '>=?|<=?'
+      - match: "(?<=\\w|\\d|\\s)>=?|<=?(?=\\s|\\d|\\w)"
         name: keyword.operator.relational.mint
       - match: '(?<!=)=(?!=)'
         name: keyword.operator.assignment.mint
@@ -247,19 +253,7 @@ repository:
     patterns:
       - name: constant.character.escape.mint
         match: "\\\\."
-      - begin: '#{'
-        beginCaptures:
-          '0':
-            name: punctuation.definition.template-expression.begin.mint
-        end: '}'
-        endCaptures:
-          '0':
-            name: punctuation.definition.template-expression.end.mint
-        name: meta.embedded.line.mint
-        patterns:
-          - name: punctuation.accessor.mint
-            match: "\\."
-          - include: '#keywords'
+      - include: '#interpolation'
 
   style:
     begin: "(?<=style\\s)[^{]*\\s{"
@@ -303,6 +297,7 @@ repository:
         name: meta.embedded.line.scss.mint
         patterns:
           - include: '#css'
+      - include: '#strings'
       - include: '#keywords'
 
   style-nesting:
