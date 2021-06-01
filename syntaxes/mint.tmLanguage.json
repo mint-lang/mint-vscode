@@ -33,9 +33,21 @@
   ],
   "repository": {
     "comments": {
-      "name": "comment.block.mint",
-      "begin": "/\\*",
-      "end": "\\*/"
+      "patterns": [
+        {
+          "name": "comment.block.mint",
+          "begin": "/\\*",
+          "end": "\\*/"
+        },
+        {
+          "match": "((//).*)$",
+          "captures": {
+            "1": {
+              "name": "comment.line.double-slash.mint"
+            }
+          }
+        }
+      ]
     },
     "css": {
       "patterns": [
@@ -189,7 +201,10 @@
         "0": {
           "name": "keyword.directive.mint",
           "patterns": [
-            { "match": "(?<=@svg\\()[^\\)]*", "name": "string.unquoted.mint" },
+            {
+              "match": "(?<=@svg\\()[^\\)]*",
+              "name": "string.unquoted.mint"
+            },
             {
               "match": "(?<=@documentation\\()[^\\)]*",
               "name": "entity.name.class.mint"
@@ -483,7 +498,11 @@
             {
               "begin": "\\(",
               "end": "\\)",
-              "patterns": [{ "include": "#keywords" }],
+              "patterns": [
+                {
+                  "include": "#keywords"
+                }
+              ],
               "name": "punctuation.params.style.mint"
             },
             {

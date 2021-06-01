@@ -16,9 +16,14 @@ patterns:
 
 repository:
   comments:
-    name: comment.block.mint
-    begin: "/\\*"
-    end: "\\*/"
+    patterns:
+      - name: comment.block.mint
+        begin: "/\\*"
+        end: "\\*/"
+      - match: "((//).*)$"
+        captures:
+          '1':
+            name: "comment.line.double-slash.mint"
 
   css:
     patterns:
