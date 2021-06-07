@@ -78,6 +78,11 @@
     "body": ["{${disabled}}"],
     "description": "Attributes are either strings or expressions."
   },
+  "Modules": {
+    "prefix": "mod",
+    "body": ["module ${1:ModuleName} {", "\t$0", "}"],
+    "description": "Modules are kind of containers for a set of relatable functions, usually used to gather functions that relate to a specific type."
+  },
   "Components": {
     "prefix": "com",
     "body": ["component ${1:ComponentName} {", "\t$0", "}"],
