@@ -6,7 +6,7 @@
 
 ## 0.4.0
 
-- Added support for langauge server ([#20](https://github.com/mint-lang/mint-vscode/pull/20))
+- Added support for language server ([#20](https://github.com/mint-lang/mint-vscode/pull/20))
 
 ## 0.3.3
 
