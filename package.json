@@ -3,7 +3,7 @@
   "license": "MIT",
   "displayName": "Mint",
   "description": "VS Code Support for Mint a refreshing programming language for the front-end web development",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "publisher": "mint-lang",
   "repository": {
     "url": "https://github.com/s0kil/mint-vscode"
