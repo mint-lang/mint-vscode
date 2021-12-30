@@ -1,5 +1,10 @@
 # Mint VS Code Changelog
 
+## 0.6.0
+
+- Add line comment ([#23](https://github.com/mint-lang/mint-vscode/pull/23))
+- Add missing module snippet ([#24](https://github.com/mint-lang/mint-vscode/pull/24))
+
 ## 0.5.0
 
 - Better syntax highlighting ([#21](https://github.com/mint-lang/mint-vscode/pull/21))
