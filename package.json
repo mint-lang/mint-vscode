@@ -6,7 +6,7 @@
   "version": "0.6.0",
   "publisher": "mint-lang",
   "repository": {
-    "url": "https://github.com/s0kil/mint-vscode"
+    "url": "https://github.com/mint-lang/mint-vscode"
   },
   "engines": {
     "vscode": "^1.49.0"
