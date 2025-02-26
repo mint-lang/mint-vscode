@@ -2,14 +2,14 @@
   "name": "mint",
   "license": "MIT",
   "displayName": "Mint",
-  "description": "VS Code Support for Mint a refreshing programming language for the front-end web development",
-  "version": "0.6.0",
+  "description": "VS Code Support for the Mint programming language.",
+  "version": "0.7.0",
   "publisher": "mint-lang",
   "repository": {
     "url": "https://github.com/mint-lang/mint-vscode"
   },
   "engines": {
-    "vscode": "^1.49.0"
+    "vscode": "^1.77.0"
   },
   "activationEvents": [
     "onLanguage:mint",
@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@types/node": "^14.11.2",
-    "@types/vscode": "^1.49.0",
+    "@types/vscode": "^1.77.0",
     "js-yaml": "^3.14.0",
     "typescript": "^4.0.3"
   },
@@ -45,6 +45,12 @@
         "mint.languageServer.location": {
           "type": "string",
           "description": "Provide a custom location for the language server binary"
+        },
+        "mint.trace.server": {
+          "scope": "window",
+          "type": "string",
+          "enum": ["off","messages","verbose"],
+          "default": "verbose"
         }
       }
     },

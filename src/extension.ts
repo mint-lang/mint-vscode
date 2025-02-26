@@ -38,11 +38,11 @@ export async function activate(
     if (fs.existsSync(binaryLocation)) {
       // Create the language client
       client = new LanguageClient(
-        'mint_language_server',
+        'mint',
         'Mint Language Server',
         {
           command: binaryLocation,
-          args: ['ls'],
+          args: ['tool', 'ls'],
         },
         {
           documentSelector: [
